@@ -1,0 +1,16 @@
+{
+  "cli": { "version": ">= 13.0.0" },
+  "build": {
+    "field-android": {
+      "distribution": "internal",
+      "android": { "buildType": "apk" }
+    },
+    "field-ios": {
+      "distribution": "store",
+      "ios": { "simulator": false }
+    }
+  },
+  "submit": {
+    "field-ios": {}
+  }
+}

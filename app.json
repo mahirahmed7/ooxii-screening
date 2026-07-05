@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "OOXii Screen",
+    "slug": "ooxii-screening",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "ooxii",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "app.ooxii.screening",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "app.ooxii.screening"
+    },
+    "plugins": ["expo-router", "expo-sqlite"]
+  }
+}
