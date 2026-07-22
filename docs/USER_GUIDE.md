@@ -8,6 +8,15 @@ The whole screening takes about 2–3 minutes per person.
 
 ---
 
+## Set up your profile (once)
+
+Tap the **round profile icon in the top-right** of the home screen. Add your
+**name** (and optionally a **photo**, **role**, and **organization**). Your
+name is stamped onto every exported CSV so the reporting team knows who
+collected each screening. Tap **Save profile**.
+
+---
+
 ## Before your first screening: calibrate the phone (once per device)
 
 The app draws the eye-chart letters at a real physical size, so it needs to

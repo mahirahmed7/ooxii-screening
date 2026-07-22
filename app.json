@@ -14,6 +14,15 @@
     "android": {
       "package": "app.ooxii.screening"
     },
-    "plugins": ["expo-router", "expo-sqlite"]
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow OOXii Screen to set a profile photo for the person running screenings."
+        }
+      ]
+    ]
   }
 }

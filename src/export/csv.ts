@@ -1,6 +1,7 @@
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import { Screening } from '../db/database';
+import { loadProfile } from '../store/profile';
 
 /**
  * CSV export — the handoff interface to Arya's reporting pipeline.
@@ -20,6 +21,7 @@ const HEADERS = [
   'paddle_power',
   'near_logmar_with_glasses',
   'outcome',
+  'screened_by',
 ];
 
 function logmarCell(v: number | null, worseThanMax: number): string {
@@ -27,7 +29,12 @@ function logmarCell(v: number | null, worseThanMax: number): string {
   return v === null || v === undefined ? '' : v.toFixed(1);
 }
 
-export function buildCsv(rows: Screening[]): string {
+/** Quote a free-text field so commas/quotes/newlines can't break the CSV. */
+function esc(v: string): string {
+  return /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+}
+
+export function buildCsv(rows: Screening[], screenedBy = ''): string {
   const lines = [HEADERS.join(',')];
   for (const r of rows) {
     lines.push(
@@ -47,6 +54,7 @@ export function buildCsv(rows: Screening[]): string {
           r.near_with_glasses_worse_than_max
         ),
         r.outcome ?? '',
+        esc(screenedBy),
       ].join(',')
     );
   }
@@ -54,7 +62,8 @@ export function buildCsv(rows: Screening[]): string {
 }
 
 export async function exportAndShare(rows: Screening[]): Promise<void> {
-  const csv = buildCsv(rows);
+  const profile = await loadProfile();
+  const csv = buildCsv(rows, profile.name);
   const stamp = new Date().toISOString().slice(0, 10);
   const uri = `${FileSystem.cacheDirectory}ooxii-screenings-${stamp}.csv`;
   await FileSystem.writeAsStringAsync(uri, csv, {

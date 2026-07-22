@@ -15,6 +15,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="index" options={{ title: 'OOXii Screen' }} />
+        <Stack.Screen name="profile" options={{ title: 'Profile' }} />
         <Stack.Screen name="calibration" options={{ title: 'Calibration' }} />
         <Stack.Screen name="screening/new" options={{ title: 'New screening' }} />
         <Stack.Screen

@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { useFocusEffect, useRouter } from 'expo-router';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Stack, useFocusEffect, useRouter } from 'expo-router';
 import { listScreenings, Screening } from '@/db/database';
 import { loadSettings } from '@/store/calibration';
+import { EMPTY_PROFILE, loadProfile, Profile } from '@/store/profile';
 import { exportAndShare } from '@/export/csv';
-import { Button } from '@/components/ui';
+import { Avatar, Button } from '@/components/ui';
 import { colors, type } from '@/components/theme';
 import { formatLogmar } from '@/engine/logmar';
 
@@ -12,16 +13,31 @@ export default function Home() {
   const router = useRouter();
   const [rows, setRows] = useState<Screening[]>([]);
   const [calibrated, setCalibrated] = useState(true);
+  const [profile, setProfile] = useState<Profile>(EMPTY_PROFILE);
 
   useFocusEffect(
     useCallback(() => {
       setRows(listScreenings());
       loadSettings().then((s) => setCalibrated(s.pxPerMm !== null));
+      loadProfile().then(setProfile);
     }, [])
   );
 
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <Pressable
+              onPress={() => router.push('/profile')}
+              hitSlop={8}
+              style={{ marginRight: 4 }}
+            >
+              <Avatar uri={profile.photoUri} name={profile.name} size={32} />
+            </Pressable>
+          ),
+        }}
+      />
       {!calibrated && (
         <View style={styles.warn}>
           <Text style={styles.warnText}>

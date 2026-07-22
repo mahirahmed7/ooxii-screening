@@ -1,6 +1,52 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { colors, type } from './theme';
+
+/**
+ * Circular profile avatar — shows the photo if set, otherwise the screener's
+ * initials on a purple disc (a neutral person glyph when there's no name yet).
+ */
+export function Avatar({
+  uri,
+  name,
+  size = 32,
+}: {
+  uri?: string | null;
+  name?: string;
+  size?: number;
+}) {
+  const initials = (name ?? '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]!.toUpperCase())
+    .join('');
+  if (uri) {
+    return (
+      <Image
+        source={{ uri }}
+        style={{ width: size, height: size, borderRadius: size / 2, backgroundColor: colors.line }}
+      />
+    );
+  }
+  return (
+    <View
+      style={{
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        backgroundColor: colors.primary,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Text style={{ color: '#fff', fontWeight: '800', fontSize: size * 0.42 }}>
+        {initials || '👤'}
+      </Text>
+    </View>
+  );
+}
 
 export function Button({
   title,

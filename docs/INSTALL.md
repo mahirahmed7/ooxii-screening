@@ -93,6 +93,18 @@ for a spread-out volunteer campaign. Steps:
 > the same free-Apple-ID limitations (7-day expiry). Pick whichever you find
 > easier; the trade-offs are identical.
 
+### Why not an AltStore "source"?
+
+AltStore lets developers publish a *source* (a hosted JSON list of apps) so an
+app shows up and auto-updates inside AltStore. It sounds like an app store, but
+it **does not remove any of the constraints above** for AltStore Classic
+(worldwide): each volunteer still needs a **computer + AltServer** to install,
+a **free Apple ID**, and the app still **expires every 7 days**. The only
+version without those limits is **AltStore PAL**, which is **EU-only** and still
+requires a paid Apple Developer account plus Apple's Core Technology Fee — at
+which point TestFlight is simpler and works everywhere. So a source doesn't
+make sideloading viable for a spread-out, non-technical volunteer team.
+
 ---
 
 ## After installing (all platforms)
