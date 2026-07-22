@@ -31,8 +31,11 @@ stored on-device in SQLite and exported as CSV for the reporting pipeline.
 
 Optotype sizes are physically calibrated, not pixel-guessed:
 
-- **Screen calibration** (required, once per device): match the on-screen
-  bar to any bank/ID card (85.60 mm). This gives true px/mm.
+- **Screen calibration** (required, once per device): stand any bank/ID card
+  on end against the left edge and match the vertical on-screen bar to the
+  card's long edge (85.60 mm). This gives true px/mm. (The bar is vertical
+  because 85.60 mm is wider than a phone screen in portrait but always
+  shorter than it is tall.)
 - **Testing distance**: v1 assumes a fixed, measured distance — carry a
   3 m rope and a 40 cm string. Camera-based automatic distance detection
   (like WHOEyes ADC) is the headline v2 feature; the engine already takes
@@ -60,24 +63,25 @@ npx expo start        # scan QR with Expo Go
 Note: Expo Go is fine for UI development, but calibration/testing accuracy
 should always be checked on a real device build.
 
-## Field distribution
+## Docs
 
-**Android (APK via link):**
-```bash
-npm i -g eas-cli && eas login
-eas build --profile field-android --platform android
-```
-EAS gives you an install link — share it directly with volunteers
-(they enable "install unknown apps" once).
+- [docs/USER_GUIDE.md](docs/USER_GUIDE.md) — how volunteers run a screening.
+- [docs/INSTALL.md](docs/INSTALL.md) — installing on volunteers' phones
+  (Android APK, iOS TestFlight, or free iOS sideloading) + which to pick.
+- [docs/BUILD_AND_DISTRIBUTE.md](docs/BUILD_AND_DISTRIBUTE.md) — producing the
+  builds with EAS.
 
-**iOS (TestFlight public link):**
-Requires an Apple Developer account (US$99/yr).
-```bash
-eas build --profile field-ios --platform ios
-eas submit --profile field-ios --platform ios
-```
-In App Store Connect → TestFlight, enable a **public link** and share it.
-Up to 10,000 testers; builds expire after 90 days, so rebuild ~quarterly.
+## Field distribution (summary)
+
+- **Android:** `eas build --profile field-android --platform android` → share
+  the install link (volunteers enable "install unknown apps" once). Free.
+- **iOS:** TestFlight public link is easiest for volunteers (they need only
+  the free TestFlight app + the link — **no** developer account). Requires an
+  Apple Developer account US$99/yr on the org side. Free sideloading (AltStore)
+  works without paying but expires every 7 days — stopgap only.
+
+See [docs/BUILD_AND_DISTRIBUTE.md](docs/BUILD_AND_DISTRIBUTE.md) and
+[docs/INSTALL.md](docs/INSTALL.md) for full steps.
 
 ## Code map
 
