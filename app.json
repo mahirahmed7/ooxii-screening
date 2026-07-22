@@ -12,7 +12,12 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "app.ooxii.screening"
+      "package": "app.ooxii.screening",
+      "permissions": [],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
+      ]
     },
     "plugins": [
       "expo-router",
@@ -23,6 +28,13 @@
           "photosPermission": "Allow OOXii Screen to set a profile photo for the person running screenings."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "30ddacda-0c2f-41b8-8ebf-9b27734a0786"
+      }
+    },
+    "owner": "mahirahmed7"
   }
 }
