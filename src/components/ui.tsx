@@ -21,7 +21,7 @@ export function Button({
       disabled={disabled}
       style={({ pressed }) => [
         styles.btn,
-        variant === 'primary' && { backgroundColor: colors.teal },
+        variant === 'primary' && { backgroundColor: colors.primary },
         variant === 'danger' && { backgroundColor: colors.red },
         variant === 'ghost' && {
           backgroundColor: 'transparent',
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
     marginBottom: 8,
   },
-  chipOn: { backgroundColor: colors.ink },
+  chipOn: { backgroundColor: colors.primary, borderColor: colors.primary },
   chipText: { fontSize: 15, fontWeight: '700', color: colors.ink },
   inlineE: {
     borderWidth: 1.5,

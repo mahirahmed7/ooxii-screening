@@ -1,18 +1,24 @@
 /**
  * Field-clinic design language: sunlight-readable contrast, oversized touch
- * targets, near-zero chrome. Palette drawn from ophthalmic kit — optotype
- * black on chart white, with a single "iris teal" action colour.
+ * targets, near-zero chrome. The app chrome (menus, buttons, results) uses a
+ * purple family with blue and yellow/gold complements. The screening itself
+ * stays strictly optotype-black on chart-white — no colour on the test screen.
  */
 export const colors = {
-  bg: '#FAFAF7', // chart white
-  ink: '#101314', // optotype black
-  teal: '#0E7C7B', // primary action
-  tealDark: '#0A5958',
-  amber: '#B4690E', // paddle / caution
+  bg: '#FAFAF7', // chart white — optotype background, never tinted
+  ink: '#141019', // optotype black (a hair of purple, still ~black)
+
+  primary: '#6D28D9', // purple — primary action
+  primaryDark: '#5B21B6',
+  blue: '#2563EB', // complementary accent (calibration)
+  yellow: '#F2C744', // complementary accent (fills / highlights)
+  amber: '#A16207', // caution / paddle — gold, legible as text on white
+
   red: '#A82E2E', // bad / refer
   green: '#2E7D46', // good / pass
-  line: '#D9D9D2',
-  muted: '#5C6366',
+
+  line: '#DBD7E6', // divider (soft purple-grey)
+  muted: '#5C5866', // muted text (purple-grey)
 };
 
 export const type = {

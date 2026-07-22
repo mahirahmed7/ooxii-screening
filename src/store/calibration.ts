@@ -2,11 +2,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Device calibration + test distances.
- * pxPerMm comes from matching an on-screen bar to a real credit card
- * (ISO/IEC 7810 ID-1 width = 85.60 mm). Distances are in mm.
+ * pxPerMm comes from matching a vertical on-screen bar to the LONG edge of a
+ * real credit card (ISO/IEC 7810 ID-1 = 85.60 mm). We use the long edge on a
+ * vertical bar because no phone's screen is 85.60 mm wide in portrait, but
+ * every screen is far taller than that — so the long edge always fits and
+ * gives the best precision. Distances are in mm.
  */
 
-export const CREDIT_CARD_MM = 85.6;
+export const CREDIT_CARD_MM = 85.6; // ID-1 long edge
 
 export interface Settings {
   pxPerMm: number | null;

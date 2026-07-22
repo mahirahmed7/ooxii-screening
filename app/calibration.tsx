@@ -18,14 +18,16 @@ import { colors, type } from '@/components/theme';
 
 /**
  * Credit-card calibration. Any ID-1 card (bank card, Opal, driver licence)
- * is exactly 85.60 mm wide. The tester adjusts the on-screen bar until the
- * card covers it edge-to-edge; that gives true pixels-per-mm for this device,
- * which every optotype size is derived from.
+ * has a long edge of exactly 85.60 mm. The tester stands the card on end
+ * against a vertical on-screen bar and resizes the bar until it matches the
+ * card's long edge; that gives true pixels-per-mm for this device, which
+ * every optotype size is derived from. The bar is vertical because 85.60 mm
+ * is wider than a phone screen in portrait but always shorter than it is tall.
  */
 export default function Calibration() {
   const router = useRouter();
   const [settings, setSettings] = useState<Settings | null>(null);
-  const [barPx, setBarPx] = useState(300);
+  const [barPx, setBarPx] = useState(320);
 
   useEffect(() => {
     loadSettings().then((s) => {
@@ -47,20 +49,23 @@ export default function Calibration() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={type.body}>
-        Hold any standard bank/ID card against the screen. Resize the bar
-        until the card's <Text style={{ fontWeight: '800' }}>width</Text>{' '}
-        matches it exactly.
+        Stand any standard bank/ID card on end against the{' '}
+        <Text style={{ fontWeight: '800' }}>left edge</Text> of the screen.
+        Resize the bar until it matches the card's{' '}
+        <Text style={{ fontWeight: '800' }}>long side</Text> exactly, top to
+        bottom.
       </Text>
 
-      <View style={[styles.bar, { width: barPx }]}>
-        <Text style={styles.barText}>85.60 mm</Text>
-      </View>
-
-      <View style={styles.nudgeRow}>
-        <Button title="−10" variant="ghost" onPress={() => nudge(-10)} style={styles.nudge} />
-        <Button title="−1" variant="ghost" onPress={() => nudge(-1)} style={styles.nudge} />
-        <Button title="+1" variant="ghost" onPress={() => nudge(1)} style={styles.nudge} />
-        <Button title="+10" variant="ghost" onPress={() => nudge(10)} style={styles.nudge} />
+      <View style={styles.calRow}>
+        <View style={[styles.bar, { height: barPx }]}>
+          <Text style={styles.barText}>85.60 mm</Text>
+        </View>
+        <View style={styles.nudgeCol}>
+          <Button title="+10" variant="ghost" onPress={() => nudge(10)} style={styles.nudge} />
+          <Button title="+1" variant="ghost" onPress={() => nudge(1)} style={styles.nudge} />
+          <Button title="−1" variant="ghost" onPress={() => nudge(-1)} style={styles.nudge} />
+          <Button title="−10" variant="ghost" onPress={() => nudge(-10)} style={styles.nudge} />
+        </View>
       </View>
 
       <Field label="Distance test — patient distance (metres)">
@@ -99,17 +104,23 @@ export default function Calibration() {
 
 const styles = StyleSheet.create({
   container: { padding: 20, gap: 18, backgroundColor: colors.bg },
+  calRow: { flexDirection: 'row', gap: 16, alignItems: 'flex-start' },
   bar: {
-    height: 110,
-    backgroundColor: colors.teal,
+    width: 68,
+    backgroundColor: colors.blue,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'flex-start',
   },
-  barText: { color: '#fff', fontWeight: '800' },
-  nudgeRow: { flexDirection: 'row', gap: 8 },
-  nudge: { flex: 1, minHeight: 48 },
+  barText: {
+    color: '#fff',
+    fontWeight: '800',
+    transform: [{ rotate: '-90deg' }],
+    width: 120,
+    textAlign: 'center',
+  },
+  nudgeCol: { flex: 1, gap: 8 },
+  nudge: { minHeight: 48 },
   input: {
     borderWidth: 2,
     borderColor: colors.ink,
