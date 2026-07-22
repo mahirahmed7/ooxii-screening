@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useRef, useState } from 'react';
+import { PanResponder, StyleSheet, Text, View } from 'react-native';
 import { AcuityStaircase, Direction, ThresholdScreen } from '../engine/staircase';
 import { letterHeightPx } from '../engine/logmar';
 import { TumblingE } from './TumblingE';
@@ -69,6 +69,8 @@ export function StaircaseRunner({
   );
 }
 
+const MIN_SWIPE = 30;
+
 function Stage({
   headline,
   practice,
@@ -82,8 +84,28 @@ function Stage({
   direction: Direction;
   onAnswer: (d: Direction) => void;
 }) {
+  // Keep the latest onAnswer without re-creating the responder each render.
+  const answerRef = useRef(onAnswer);
+  answerRef.current = onAnswer;
+
+  // Swipe is valid anywhere on the test screen. We only claim the gesture
+  // once the finger has moved, so taps still reach the arrow buttons.
+  const responder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: (_e, g) =>
+        Math.abs(g.dx) > 10 || Math.abs(g.dy) > 10,
+      onPanResponderRelease: (_e, g) => {
+        const { dx, dy } = g;
+        if (Math.abs(dx) < MIN_SWIPE && Math.abs(dy) < MIN_SWIPE) return;
+        if (Math.abs(dx) > Math.abs(dy)) answerRef.current(dx > 0 ? 'right' : 'left');
+        else answerRef.current(dy > 0 ? 'down' : 'up');
+      },
+    })
+  ).current;
+
   return (
-    <View style={styles.stage}>
+    <View style={styles.stage} {...responder.panHandlers}>
       <Text style={type.label}>{headline}</Text>
       {practice && <Text style={styles.practice}>Practice — not scored</Text>}
       <View style={styles.optotypeArea}>

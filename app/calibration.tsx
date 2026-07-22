@@ -115,8 +115,10 @@ const styles = StyleSheet.create({
   barText: {
     color: '#fff',
     fontWeight: '800',
+    fontSize: 12,
+    letterSpacing: 0.5,
     transform: [{ rotate: '-90deg' }],
-    width: 120,
+    width: 90,
     textAlign: 'center',
   },
   nudgeCol: { flex: 1, gap: 8 },

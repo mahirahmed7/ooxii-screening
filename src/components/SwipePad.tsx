@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Direction } from '../engine/staircase';
 import { InlineE } from './ui';
 import { colors } from './theme';
@@ -7,29 +7,15 @@ import { colors } from './theme';
 /**
  * Response input. The patient (near test) swipes the direction the E points;
  * at distance the patient gestures with a hand and the tester enters it.
- * Arrow buttons are provided as an explicit fallback for testers.
+ * The swipe gesture is captured across the whole test screen (see the
+ * PanResponder in TestRunner's Stage) — this component just shows the hint
+ * and the explicit arrow-button fallback for testers.
  */
 
-const MIN_SWIPE = 30;
-
 export function SwipePad({ onAnswer }: { onAnswer: (d: Direction) => void }) {
-  const responder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: (_e, g) =>
-        Math.abs(g.dx) > 10 || Math.abs(g.dy) > 10,
-      onPanResponderRelease: (_e, g) => {
-        const { dx, dy } = g;
-        if (Math.abs(dx) < MIN_SWIPE && Math.abs(dy) < MIN_SWIPE) return;
-        if (Math.abs(dx) > Math.abs(dy)) onAnswer(dx > 0 ? 'right' : 'left');
-        else onAnswer(dy > 0 ? 'down' : 'up');
-      },
-    })
-  ).current;
-
   return (
     <View style={styles.wrap}>
-      <View style={styles.swipeZone} {...responder.panHandlers}>
+      <View style={styles.swipeZone}>
         <Text style={styles.hint}>
           Swipe the direction the <InlineE /> points
         </Text>
