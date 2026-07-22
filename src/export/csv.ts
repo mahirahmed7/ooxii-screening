@@ -22,6 +22,7 @@ const HEADERS = [
   'near_logmar_with_glasses',
   'outcome',
   'screened_by',
+  'staff_id',
 ];
 
 function logmarCell(v: number | null, worseThanMax: number): string {
@@ -34,7 +35,11 @@ function esc(v: string): string {
   return /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
 }
 
-export function buildCsv(rows: Screening[], screenedBy = ''): string {
+export function buildCsv(
+  rows: Screening[],
+  screenedBy = '',
+  staffId = ''
+): string {
   const lines = [HEADERS.join(',')];
   for (const r of rows) {
     lines.push(
@@ -55,6 +60,7 @@ export function buildCsv(rows: Screening[], screenedBy = ''): string {
         ),
         r.outcome ?? '',
         esc(screenedBy),
+        esc(staffId),
       ].join(',')
     );
   }
@@ -63,7 +69,7 @@ export function buildCsv(rows: Screening[], screenedBy = ''): string {
 
 export async function exportAndShare(rows: Screening[]): Promise<void> {
   const profile = await loadProfile();
-  const csv = buildCsv(rows, profile.name);
+  const csv = buildCsv(rows, profile.name, profile.staffId);
   const stamp = new Date().toISOString().slice(0, 10);
   const uri = `${FileSystem.cacheDirectory}ooxii-screenings-${stamp}.csv`;
   await FileSystem.writeAsStringAsync(uri, csv, {

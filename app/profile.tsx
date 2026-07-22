@@ -71,6 +71,9 @@ export default function ProfileScreen() {
             {profile.photoUri ? 'Change photo' : 'Add photo'}
           </Text>
         </Pressable>
+        {!!profile.staffId && (
+          <Text style={styles.staffId}>ID: {profile.staffId}</Text>
+        )}
       </View>
 
       <Field label="Name">
@@ -119,6 +122,7 @@ const styles = StyleSheet.create({
   container: { padding: 20, backgroundColor: colors.bg },
   avatarRow: { alignItems: 'center', gap: 10, marginBottom: 24 },
   change: { color: colors.primary, fontWeight: '700' },
+  staffId: { color: colors.muted, fontWeight: '700', letterSpacing: 1 },
   input: {
     borderWidth: 2,
     borderColor: colors.ink,

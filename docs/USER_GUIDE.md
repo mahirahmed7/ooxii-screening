@@ -11,9 +11,10 @@ The whole screening takes about 2–3 minutes per person.
 ## Set up your profile (once)
 
 Tap the **round profile icon in the top-right** of the home screen. Add your
-**name** (and optionally a **photo**, **role**, and **organization**). Your
-name is stamped onto every exported CSV so the reporting team knows who
-collected each screening. Tap **Save profile**.
+**name** (and optionally a **photo**, **role**, and **organization**). The app
+also assigns you a **staff/volunteer ID** automatically (e.g. `VOL-7Q3K9F`).
+Your name and ID are stamped onto every exported CSV so the reporting team
+knows who collected each screening. Tap **Save profile**.
 
 ---
 

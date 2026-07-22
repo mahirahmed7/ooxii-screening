@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * the reporting pipeline knows who collected each record.
  */
 export interface Profile {
+  staffId: string; // auto-generated, stable volunteer/staff ID for this device
   name: string;
   role: string; // e.g. "Volunteer", "Optometrist"
   organization: string;
@@ -13,6 +14,7 @@ export interface Profile {
 }
 
 export const EMPTY_PROFILE: Profile = {
+  staffId: '',
   name: '',
   role: '',
   organization: '',
@@ -21,14 +23,34 @@ export const EMPTY_PROFILE: Profile = {
 
 const KEY = 'ooxii.profile.v1';
 
+/** Random human-readable ID, e.g. "VOL-7Q3K9F". Not security-sensitive. */
+export function generateStaffId(): string {
+  let s = '';
+  for (let i = 0; i < 6; i++) {
+    s += Math.floor(Math.random() * 36)
+      .toString(36)
+      .toUpperCase();
+  }
+  return `VOL-${s}`;
+}
+
 export async function loadProfile(): Promise<Profile> {
   const raw = await AsyncStorage.getItem(KEY);
-  if (!raw) return { ...EMPTY_PROFILE };
-  try {
-    return { ...EMPTY_PROFILE, ...JSON.parse(raw) };
-  } catch {
-    return { ...EMPTY_PROFILE };
+  let profile: Profile = { ...EMPTY_PROFILE };
+  if (raw) {
+    try {
+      profile = { ...EMPTY_PROFILE, ...JSON.parse(raw) };
+    } catch {
+      profile = { ...EMPTY_PROFILE };
+    }
   }
+  // Assign a stable staff ID on first load and persist it, so every device
+  // that runs screenings has one — even before a name is entered.
+  if (!profile.staffId) {
+    profile.staffId = generateStaffId();
+    await saveProfile(profile);
+  }
+  return profile;
 }
 
 export async function saveProfile(p: Profile): Promise<void> {

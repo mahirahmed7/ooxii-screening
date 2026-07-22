@@ -49,11 +49,12 @@ Optotype sizes are physically calibrated, not pixel-guessed:
 `id, date_time_utc, year_of_birth, gender, cataract_surgery,
 distance_vision_right, distance_vision_left, near_vision,
 near_logmar_no_glasses, paddle_power, near_logmar_with_glasses, outcome,
-screened_by`
+screened_by, staff_id`
 
 - vision fields: `good` / `bad`; logMAR fields: `0.0`–`1.0` or `>1.0`
 - `outcome`: `PASS` / `PADDLE` / `REFER_FULL_TEST`
 - `screened_by`: name from the device's profile (who collected the data)
+- `staff_id`: auto-generated stable volunteer/staff ID (e.g. `VOL-7Q3K9F`)
 
 ## Run locally
 
