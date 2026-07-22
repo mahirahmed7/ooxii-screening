@@ -33,7 +33,7 @@ export default function Home() {
               hitSlop={8}
               style={{ marginRight: 4 }}
             >
-              <Avatar uri={profile.photoUri} name={profile.name} size={32} />
+              <Avatar uri={profile.photoUri} size={32} />
             </Pressable>
           ),
         }}

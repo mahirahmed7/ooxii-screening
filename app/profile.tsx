@@ -64,7 +64,7 @@ export default function ProfileScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.avatarRow}>
         <Pressable onPress={pickPhoto}>
-          <Avatar uri={profile.photoUri} name={profile.name} size={96} />
+          <Avatar uri={profile.photoUri} size={96} />
         </Pressable>
         <Pressable onPress={pickPhoto}>
           <Text style={styles.change}>

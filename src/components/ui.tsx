@@ -3,30 +3,19 @@ import { Image, Pressable, StyleSheet, Text, View, ViewStyle } from 'react-nativ
 import { colors, type } from './theme';
 
 /**
- * Circular profile avatar — shows the photo if set, otherwise the screener's
- * initials on a purple disc (a neutral person glyph when there's no name yet).
+ * Circular profile avatar. Shows the photo edge-to-edge if set; otherwise the
+ * classic default: a darker-grey head-and-shoulders silhouette on a light-grey
+ * disc (built from plain Views, clipped to the circle — no icon library).
  */
-export function Avatar({
-  uri,
-  name,
-  size = 32,
-}: {
-  uri?: string | null;
-  name?: string;
-  size?: number;
-}) {
-  const initials = (name ?? '')
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]!.toUpperCase())
-    .join('');
+const AVATAR_BG = '#D5D5DB';
+const AVATAR_FG = '#9096A0';
+
+export function Avatar({ uri, size = 32 }: { uri?: string | null; size?: number }) {
   if (uri) {
     return (
       <Image
         source={{ uri }}
-        style={{ width: size, height: size, borderRadius: size / 2, backgroundColor: colors.line }}
+        style={{ width: size, height: size, borderRadius: size / 2 }}
       />
     );
   }
@@ -36,14 +25,34 @@ export function Avatar({
         width: size,
         height: size,
         borderRadius: size / 2,
-        backgroundColor: colors.primary,
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: AVATAR_BG,
+        overflow: 'hidden',
       }}
     >
-      <Text style={{ color: '#fff', fontWeight: '800', fontSize: size * 0.42 }}>
-        {initials || '👤'}
-      </Text>
+      {/* head */}
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.17,
+          left: size / 2 - size * 0.19,
+          width: size * 0.38,
+          height: size * 0.38,
+          borderRadius: size * 0.19,
+          backgroundColor: AVATAR_FG,
+        }}
+      />
+      {/* shoulders (dome clipped by the circle's bottom edge) */}
+      <View
+        style={{
+          position: 'absolute',
+          bottom: -size * 0.14,
+          left: size / 2 - size * 0.31,
+          width: size * 0.62,
+          height: size * 0.5,
+          borderRadius: size * 0.31,
+          backgroundColor: AVATAR_FG,
+        }}
+      />
     </View>
   );
 }
