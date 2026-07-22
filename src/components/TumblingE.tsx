@@ -26,19 +26,29 @@ export function TumblingE({
   const s = Math.max(sizePx, 4); // never collapse below visibility
   const u = s / 5;
   return (
+    // Crowding box: a square outline framing the optotype, scaled to the E.
     <View
       style={{
-        width: s,
-        height: s,
-        transform: [{ rotate: ROTATION[direction] }],
+        padding: u,
+        borderWidth: Math.max(2, u * 0.6),
+        borderColor: colors.ink,
+        borderRadius: Math.max(2, u * 0.4),
       }}
     >
-      {/* spine */}
-      <View style={{ position: 'absolute', left: 0, top: 0, width: u, height: s, backgroundColor: colors.ink }} />
-      {/* arms */}
-      <View style={{ position: 'absolute', left: 0, top: 0, width: s, height: u, backgroundColor: colors.ink }} />
-      <View style={{ position: 'absolute', left: 0, top: 2 * u, width: s, height: u, backgroundColor: colors.ink }} />
-      <View style={{ position: 'absolute', left: 0, top: 4 * u, width: s, height: u, backgroundColor: colors.ink }} />
+      <View
+        style={{
+          width: s,
+          height: s,
+          transform: [{ rotate: ROTATION[direction] }],
+        }}
+      >
+        {/* spine */}
+        <View style={{ position: 'absolute', left: 0, top: 0, width: u, height: s, backgroundColor: colors.ink }} />
+        {/* arms */}
+        <View style={{ position: 'absolute', left: 0, top: 0, width: s, height: u, backgroundColor: colors.ink }} />
+        <View style={{ position: 'absolute', left: 0, top: 2 * u, width: s, height: u, backgroundColor: colors.ink }} />
+        <View style={{ position: 'absolute', left: 0, top: 4 * u, width: s, height: u, backgroundColor: colors.ink }} />
+      </View>
     </View>
   );
 }

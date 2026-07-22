@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Direction } from '../engine/staircase';
+import { InlineE } from './ui';
 import { colors } from './theme';
 
 /**
@@ -29,7 +30,9 @@ export function SwipePad({ onAnswer }: { onAnswer: (d: Direction) => void }) {
   return (
     <View style={styles.wrap}>
       <View style={styles.swipeZone} {...responder.panHandlers}>
-        <Text style={styles.hint}>Swipe the direction the E points</Text>
+        <Text style={styles.hint}>
+          Swipe the direction the <InlineE /> points
+        </Text>
       </View>
       <View style={styles.row}>
         <Arrow label="←" onPress={() => onAnswer('left')} />

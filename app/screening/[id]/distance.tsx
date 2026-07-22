@@ -4,7 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { loadSettings, Settings } from '@/store/calibration';
 import { updateScreening } from '@/db/database';
 import { ThresholdRunner } from '@/components/TestRunner';
-import { Button } from '@/components/ui';
+import { Button, InlineE } from '@/components/ui';
 import { colors, type } from '@/components/theme';
 
 type Eye = 'right' | 'left';
@@ -53,8 +53,8 @@ export default function DistanceTest() {
           <Text style={{ fontWeight: '800' }}>
             {eye === 'right' ? 'LEFT' : 'RIGHT'}
           </Text>{' '}
-          eye. The patient points the direction the E faces; you enter it
-          below. First E is practice.
+          eye. The patient points the direction the <InlineE /> faces; you
+          enter it below. First <InlineE /> is practice.
         </Text>
         {eye === 'left' && rightGood !== null && (
           <Text style={{ color: colors.muted }}>

@@ -66,6 +66,14 @@ export function Chip({
   );
 }
 
+/**
+ * Inline optotype E for instruction prose — the letter framed in a small
+ * square so it matches the boxed optotype the patient sees on screen.
+ */
+export function InlineE() {
+  return <Text style={styles.inlineE}>E</Text>;
+}
+
 export function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <View style={{ marginBottom: 22 }}>
@@ -95,4 +103,13 @@ const styles = StyleSheet.create({
   },
   chipOn: { backgroundColor: colors.ink },
   chipText: { fontSize: 15, fontWeight: '700', color: colors.ink },
+  inlineE: {
+    borderWidth: 1.5,
+    borderColor: colors.ink,
+    borderRadius: 3,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+    fontWeight: '800',
+    color: colors.ink,
+  },
 });

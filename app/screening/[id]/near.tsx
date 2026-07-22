@@ -4,7 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { loadSettings, Settings } from '@/store/calibration';
 import { getScreening, updateScreening } from '@/db/database';
 import { StaircaseRunner } from '@/components/TestRunner';
-import { Button } from '@/components/ui';
+import { Button, InlineE } from '@/components/ui';
 import { colors, type } from '@/components/theme';
 import { decide, nearIsGood } from '@/engine/decision';
 
@@ -50,7 +50,7 @@ export default function NearTest() {
         <Text style={type.body}>
           Patient holds the phone (or it is held) at{' '}
           {settings.nearTestMm / 10} cm — both eyes open, usual glasses OFF.
-          The patient swipes the direction the E points. Letters get smaller
+          The patient swipes the direction the <InlineE /> points. Letters get smaller
           as they answer correctly.
         </Text>
         <Button title="Begin" onPress={() => setPhase('test')} />
